@@ -42,7 +42,6 @@ const RestaurantsMenuPage = async ({
     <div>
       <RestaurantMenuHeader restaurant={restaurant} />
       <RestaurantCategories restaurant={restaurant} />
-      
     </div>
   );
 };
