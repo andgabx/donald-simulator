@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CartContext } from "../../contexts/cart";
-import CardSheet from "./cart-sheet";
+import CardSheet from "../../components/cart-sheet";
 
 interface ProductsDetailsProps {
   product: Prisma.ProductGetPayload<{
