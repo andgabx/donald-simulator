@@ -3,19 +3,26 @@ import { notFound } from "next/navigation";
 import RestaurantMenuHeader from "./components/header";
 import RestaurantCategories from "./components/categories";
 
-interface PageProps {
-  params: { slug: string };
-  searchParams: { consumptionMethod?: string };
-}
+type PageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+  searchParams: Promise<{
+    consumptionMethod?: string;
+  }>;
+};
 
 const isConsumptionMethodValid = (consumptionMethod: string) => {
   return ["DINE_IN", "TAKEAWAY"].includes(consumptionMethod.toUpperCase());
 };
 
-const RestaurantsMenuPage = async ({ params, searchParams }: PageProps) => {
-  const { slug } = params;
-  const { consumptionMethod } = searchParams;
-  
+export default async function RestaurantsMenuPage({
+  params,
+  searchParams,
+}: PageProps) {
+  const { slug } = await params;
+  const { consumptionMethod } = await searchParams;
+
   if (consumptionMethod && !isConsumptionMethodValid(consumptionMethod)) {
     return notFound();
   }
@@ -41,6 +48,4 @@ const RestaurantsMenuPage = async ({ params, searchParams }: PageProps) => {
       <RestaurantCategories restaurant={restaurant} />
     </div>
   );
-};
-
-export default RestaurantsMenuPage;
+}
