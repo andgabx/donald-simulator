@@ -9,6 +9,8 @@ import {
 import { CartContext } from "../contexts/cart";
 import { useContext } from "react";
 import CartItem from "./cart-product-item";
+
+
 const CartSheet = () => {
   const { isOpen, toggleCart, products } = useContext(CartContext);
   return (
@@ -17,9 +19,15 @@ const CartSheet = () => {
         <SheetHeader>
           <SheetTitle className="text-left pb-4">Sacola</SheetTitle>
         </SheetHeader>
-        {products.map((product) => (
-          <CartItem key={product.id} item={product} />
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => (
+            <CartItem key={product.id} item={product} />
+          ))
+        ) : (
+          <p className="text-center mt-10 flex items-center justify-center gap-2 text-sm text-gray-400">
+            Nenhum produto adicionado
+          </p>
+        )}
       </SheetContent>
     </Sheet>
   );
