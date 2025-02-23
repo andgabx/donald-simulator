@@ -1,7 +1,7 @@
-import { Product } from "@prisma/client";   
+import { ConsumptionMethod, Product } from "@prisma/client";   
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface ProductsProps {
     products: Product[];
@@ -9,10 +9,13 @@ interface ProductsProps {
 
 const Products = ({ products }: ProductsProps) => {
     const {slug} = useParams<{slug: string}>();
+    const searchParams = useSearchParams();
+    const consumptionMethod = searchParams.get("consumptionMethod") as ConsumptionMethod;
+
     return ( 
         <div className="space-y-3 px-4">
             {products.map((product) => (
-                    <Link key={product.id} className="flex items-center justify-between gap-10 py-3" href={`/${slug}/menu/${product.id}`}>
+                    <Link key={product.id} className="flex items-center justify-between gap-10 py-3" href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`}>
                         <div>
                             <h3 className="text-sm font-medium">
                                 {product.name}
