@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "./[slug]/menu/contexts/cart";
-import { Toaster } from "sonner";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,15 +15,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        <CartProvider>{children}</CartProvider>
-        <Toaster />
-      </body>
+    <html lang="en" className={poppins.className}>
+      <body>{children}</body>
     </html>
   );
 }
