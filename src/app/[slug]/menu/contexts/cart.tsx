@@ -12,6 +12,7 @@ export interface ICardContext {
   isOpen: boolean;
   products: CartProduct[];
   toggleCart: () => void;
+  total: number;
   addProduct: (product: CartProduct) => void;
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
@@ -21,6 +22,7 @@ export interface ICardContext {
 export const CartContext = createContext<ICardContext>({
   isOpen: false,
   products: [],
+  total: 0,
   toggleCart: () => {},
   addProduct: () => {},
   decreaseProductQuantity: () => {},
@@ -32,6 +34,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<CartProduct[]>([]);
 
+  const total = products.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0,
+  );
   const toggleCart = () => {
     setIsOpen(!isOpen);
   };
@@ -92,6 +98,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isOpen,
         products,
+        total,
         toggleCart,
         addProduct,
         decreaseProductQuantity,
