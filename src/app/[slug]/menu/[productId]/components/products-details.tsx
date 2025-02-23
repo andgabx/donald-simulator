@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ProductsDetailsProps {
     product: Prisma.ProductGetPayload<{
@@ -32,8 +33,8 @@ const ProductsDetails = ({ product }: ProductsDetailsProps) => {
         setQuantity((prev) => prev + 1);
     }
     return ( 
-        <div className="relative z-50 items-center rounded-t-3xl p-4 mt-[-1.5rem] flex flex-auto flex-col gap-10">
-           <div className="flex-auto">
+        <div className="relative z-50 items-center rounded-t-3xl p-4 mt-[-1.5rem] flex flex-auto flex-col gap-10 overflow-hidden">
+           <div className="flex-auto overflow-hidden">
 
            <div className="flex items-center gap-1 px-5">
                 <Image src={product.restaurant.avatarImageUrl} alt={product.restaurant.name} width={16} height={16} className="rounded-full" />
@@ -62,6 +63,7 @@ const ProductsDetails = ({ product }: ProductsDetailsProps) => {
                 </div>
             </div>
 
+            <ScrollArea className="h-screen">
             <div className="mt-6 space-y-3 px-5">
                 <h4 className="font-semibold">Sobre</h4>
                 <p className="text-sm text-muted-foreground">
@@ -74,10 +76,17 @@ const ProductsDetails = ({ product }: ProductsDetailsProps) => {
                     <ChefHatIcon size={16} />
                     <h4 className="font-semibold">Ingredientes</h4>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                        {product.ingredients.join(", ")}
-                    </p>
+                
+
+
+                <ul className="text-sm px-5 list-disc text-muted-foreground">
+                        {product.ingredients.map((ingredient) => (
+                            <li key={ingredient}>{ingredient}</li>
+                        ))}
+                       
+                    </ul>
             </div>
+            </ScrollArea>
            </div>
         <Button className="w-full rounded-full mt-6">Adicionar ao carrinho</Button>
         </div>
