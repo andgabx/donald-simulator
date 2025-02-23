@@ -3,7 +3,8 @@
 import { Product } from "@prisma/client";
 import { createContext, useState } from "react";
 
-interface CartProduct extends Pick<Product, "id" | "name" | "price" | "imageUrl"> {
+interface CartProduct
+  extends Pick<Product, "id" | "name" | "price" | "imageUrl"> {
   quantity: number;
 }
 
@@ -30,13 +31,28 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addProduct = (product: CartProduct) => {
-    setProducts((prev) => [...prev, product]);
+    const productIsAlreadyInCart = products.some(
+      (prevProduct) => prevProduct.id === product.id,
+    );
+
+    if (!productIsAlreadyInCart) {
+      return setProducts((prev) => [...prev, product]);
+    }
+
+    setProducts((prevProducts) =>
+      prevProducts.map((prevProduct) =>
+        prevProduct.id === product.id
+          ? {
+              ...prevProduct,
+              quantity: prevProduct.quantity + product.quantity,
+            }
+          : prevProduct,
+      ),
+    );
   };
 
   return (
-    <CartContext.Provider
-      value={{ isOpen, products, toggleCart, addProduct }}
-    >
+    <CartContext.Provider value={{ isOpen, products, toggleCart, addProduct }}>
       {children}
     </CartContext.Provider>
   );
