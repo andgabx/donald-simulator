@@ -24,7 +24,7 @@ const CartSheet = () => {
           <SheetTitle className="pb-4 text-left">Sacola</SheetTitle>
         </SheetHeader>
         <div className="flex h-full flex-col py-5">
-          <div className="flex-auto">
+          <div className="flex-auto space-y-5">
               {products.length > 0 ? (
                 products.map((product) => (
                   <CartItem key={product.id} item={product} />

@@ -13,6 +13,7 @@ const Products = ({ products }: ProductsProps) => {
     const consumptionMethod = searchParams.get("consumptionMethod") as ConsumptionMethod;
 
     return ( 
+        
         <div className="space-y-3 px-4">
             {products.map((product) => (
                     <Link key={product.id} className="flex items-center justify-between gap-10 py-3" href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`}>
